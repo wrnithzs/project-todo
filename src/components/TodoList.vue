@@ -1,7 +1,6 @@
 <template>
   <div>
-    <br/>
-    <div class="card mb-1" v-for="(todo, index) in todos" v-bind:key="todo.id">
+    <div class="card mb-3" v-for="(todo, index) in todos" v-bind:key="todo.id">
       <div class="card-body">
         <h5 class="card-title">Todo {{index+1}}</h5>
         <p class="card-text">title: {{todo.task }}</p>
@@ -26,42 +25,37 @@
             >Down</button>
             <router-view />
           </div>
-
         </div>
+      </div>
     </div>
-</div>
-</div>
+  </div>
 </template>
 
 <!--firebase config-->
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-firestore.js"></script>
+<script src='https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js'></script>
+<script src='https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js'></script>
 <script>
-import { db } from "../main";
+import { db } from '../main'
 
 export default {
   data() {
     return {
-          todos: [],
-      newTask: "",
-      newDetail: "",
-      editTask: "",
-      editDetails: "",
+      todos: [],
+      newTask: '',
+      newDetail: '',
+      editTask: '',
+      editDetails: '',
       editID: null,
-      isEmpty: false,
-      showTodo: true,
-      showCreate: false,
-      showEdit: false,
       emptySave: false
     }
   },
   firestore() {
     return {
       todos: db.collection("todos")
-    };
+    }
   },
   methods: {
-      addTodo() {
+    addTodo() {
         // const todo = []
         if (this.newTask.trim().length === 0 && this.newDetail.trim().length === 0) {
         return (this.emptySave = true);
@@ -71,7 +65,7 @@ export default {
             details: this.newDetail
        }).then(this.newTask = '', this.newDetail = '')
         console.log('saved !!')
-      },
+    },
     loadTodo() {
       let todolist = [];
       db.collection("todos")
@@ -83,10 +77,10 @@ export default {
               task: doc.data().task,
               details: doc.data().details
             };
-            todolist.push(todo);
-          });
+            todolist.push(todo)
+          })
         });
-      this.todos = todolist;
+      this.todos = todolist
     },
     removeTodo(collectionID) {
       db.collection("todos")
@@ -94,15 +88,16 @@ export default {
         .delete()
         .then(function() {})
         .catch(function(error) {
-          console.error("Error removing document: ", error);
+          console.error("Error removing document: ", error)
         });
-      this.loadTodo();
+      this.loadTodo()
+      console.log('Deleted!!')
     },
     editTodo(todo) {
       (this.editID = todo.id),
         (this.editTask = todo.task),
         (this.editDetails = todo.details),
-        console.log("edited!!!!");
+        console.log("edited!!!!")
     },
     updateTodo() {
       db.collection("todos")
@@ -112,45 +107,47 @@ export default {
           details: this.editDetails
         })
         .then(function() {
-          console.log("Document successfully updated!");
+          console.log("Document successfully updated!")
         })
         .catch(function(error) {
-          console.error("Error updating document: ", error);
+          console.error("Error updating document: ", error)
         });
-      this.editID = null;
-      this.editTask = " ";
-      this.loadTodo();
+      this.editID = null
+      this.editTask = " "
+      this.loadTodo()
     },
     moveUp(index) {
       if (index == 0) {
-        return;
+        return null
       }
-      let todo = this.todos[index];
-      this.todos.splice(index, 1);
-      this.todos.splice(index - 1, 0, todo);
+      let todo = this.todos[index]
+      this.todos.splice(index, 1)
+      this.todos.splice(index - 1, 0, todo)
     },
     moveDown(index) {
       if (index == this.todos.length - 1) {
-        return;
+        return null
       }
-      let todo = this.todos[index];
-      this.todos.splice(index, 1);
-      this.todos.splice(index + 1, 0, todo);
+      let todo = this.todos[index]
+      this.todos.splice(index, 1)
+      this.todos.splice(index + 1, 0, todo)
     }
   },
   mounted() {
-    this.loadTodo();
+    this.loadTodo()
   }
-};
+}
 </script>
 
 <style scope>
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css");
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-size: 2.5ex;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 20px;
+  text-align: center;
 }
 </style>

@@ -1,13 +1,22 @@
 <template>
   <div id="app">
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <router-link :to="{ name: 'List' }" class="nav-link"> Todo List <span class="sr-only">(current)</span></router-link>
-      </li>
-      <li class="nav-item">
-        <router-link :to="{ name: 'Create' }" class="nav-link"> Create <span class="sr-only">(current)</span></router-link>
-      </li>
-    </ul>
+    <img width="40%" height="20%" src="https://cdn.worldvectorlogo.com/logos/studio-ghibli-logo.svg">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <router-link :to="{ name: 'TodoList' }" class="nav-link">
+            Todo List
+            <span class="sr-only">(current)</span>
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Create' }" class="nav-link">
+            Create
+            <span class="sr-only">(current)</span>
+          </router-link>
+        </li>
+      </ul>
+    </nav>
     <router-view />
   </div>
 </template>
@@ -20,6 +29,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+
 }
 
 #nav {

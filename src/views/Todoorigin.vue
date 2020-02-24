@@ -1,6 +1,5 @@
 <template>
  <div id="app" class="container">
-    <!-- nav bar -->
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a
